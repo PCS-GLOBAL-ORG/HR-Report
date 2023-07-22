@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 100px;
+      background-color: aqua;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    .container {
+      width: 500px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    input[type=text],
+    input[type=password],
+    input[type="date"],
+    input[type="email"],
+    input[type="address"],
+    input[type="tel"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      display: block;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 14px 20px;
+      margin: 8px 0;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    button:hover {
+      opacity: 0.8;
+    }
+
+    .error {
+      color: red;
+    }
+
+    .container_bg {
+      margin: 0 auto;
+      height: 500px;
+    }
+
+    .date-container {
+      display: flex;
+    }
+
+    .date-container input[type="number"] {
+      width: 33.33%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Offer Letter Generator</h1>
+
+  <div ng-app="offerLetterApp" ng-controller="OfferLetterController" class="container">
+    <b>
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" placeholder="Enter The Name" ng-model="name" required><br>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" placeholder="Enter The Email" ng-model="email" required><br>
+
+      <label for="phone">Phone Number:</label>
+      <input type="tel" id="phone" name="phone" placeholder="Enter The Phone Number" ng-model="phone" required><br>
+
+      <label for="address">Address:</label>
+      <input type="address" id="address" name="address"  placeholder="Enter The Address" ng-model="address" required><br>
+
+
+      <label for="designation">Designation:</label>
+      <select id="designation" name="designation" ng-model="designation" required>
+        <option value="">Select Designation</option>
+        <option value="Trainee Software Engineer">Trainee Software Engineer</option>
+        <option value="Software Engineer">Software Engineer</option>
+        <option value=" Web  Developer"> Web  Developer</option>
+        <option value="Mobile App Developer">Mobile App Developer</option>
+        <option value="Data Analyst">Data Analyst</option>
+        <option value="Network Administrator">Network Administrator</option>
+        <option value="System Administrator">System Administrator</option>
+        <option value="UI / UX Designer">UI / UX Designer</option>
+        <option value="Quality Assurance Engineer">Quality Assurance Engineer</option>
+        <option value="Business Analyst">Business Analyst</option>
+        <option value="Project Manager">Project Manager</option>
+        <option value="Database Administrator">Database Administrator</option>
+        <option value="Software Architect">Software Architect</option>
+        <option value="DevOps Engineer">DevOps Engineer</option>
+        <option value="Cybersecurity Analyst">Cybersecurity Analyst</option>
+        <option value="Artificial Intelligence Engineer">Artificial Intelligence Engineer</option>
+      </select><br> 
+
+      
+      <label for="technicalDomain">Primary Technical Domain:</label>
+      <select id="technicalDomain" name="technicalDomain" ng-model="technicalDomain" required>
+        <option value="">Select Technical Domain</option>
+        <option value="Web Development">Web Development</option>
+        <option value="Mobile App Development">Mobile App Development</option>
+        <option value="Data Science">Data Science</option>
+        <option value="Artificial Intelligence">Artificial Intelligence</option>
+        <option value="Machine Learning">Machine Learning</option>
+        <option value="Cloud Computing">Cloud Computing</option>
+        <option value="Database Management">Database Management</option>
+        <option value="Network Security">Network Security</option>
+        <option value="UI/UX Design">UI/UX Design</option>
+        <option value="Game Development">Game Development</option>
+        <option value="DevOps">DevOps</option>
+        <option value="Blockchain Development">Blockchain Development</option>
+        <option value="Robotics">Robotics</option>
+        <option value="Internet of Things (IoT)">Internet of Things (IoT)</option>
+        <option value="Big Data Analytics">Big Data Analytics</option>
+      </select><br>
+
+      <label for="associateId">Provisional Associate ID:</label>
+      <input type="text" id="associateId" name="associateId" placeholder="Enter The Provisional Associate ID " ng-model="associateId" required><br>
+
+      <label for="termsConditions">Primary Terms & Conditions:</label>
+      <textarea id="termsConditions" name="termsConditions" placeholder="Enter The Primary Terms & Conditions"  ng-model="termsConditions" required></textarea><br>
+
+
+<!-- Date of Joining -->
+<label for="dateOfJoining">Date of Joining:</label><br>
+<div class="date-container">
+  <input type="number" id="joinDay" name="joinDay" placeholder="Day" ng-model="joinDay" required>
+  <input type="number" id="joinMonth" name="joinMonth" placeholder="Month" ng-model="joinMonth" required>
+  <input type="number" id="joinYear" name="joinYear" placeholder="Year" ng-model="joinYear" required>
+</div><br>
+
+<!-- Date Joining -->
+<label for="dateJoining">Generate Pdf Data:</label><br>
+<div class="date-container">
+  <input type="number" id="joinDay2" name="joinDay2" placeholder="Day" ng-model="joinDay2" required>
+  <input type="number" id="joinMonth2" name="joinMonth2" placeholder="Month" ng-model="joinMonth2" required>
+  <input type="number" id="joinYear2" name="joinYear2" placeholder="Year" ng-model="joinYear2" required>
+</div><br>
+
+
+      
+      
+      <button ng-click="generateOfferLetter()">Print Offer Letter</button>
+      <button ng-click="printAndSendEmail()">Print and Send Email</button>
+      <button ng-click="cancelProcess()">Cancel</button>
+    </b>
+  </div>
+
+  <!-- Include AngularJS scripts here -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular-route.min.js"></script>
+  <script>
+    angular.module('offerLetterApp', ['ngRoute'])
+      .config(['$routeProvider', function($routeProvider) {
+        $routeProvider
+          .when('/', {
+            templateUrl: 'offer-letter.html',
+            controller: 'OfferLetterController'
+          })
+          .otherwise({
+            redirectTo: '/'
+          });
+      }])
+      .controller('OfferLetterController', ['$scope', function($scope) {
+        $scope.generateOfferLetter = function() {
+  // Date of Joining
+  var monthJoining = $scope.joinMonth.toString().padStart(2, '0');
+  var dayJoining = $scope.joinDay.toString().padStart(2, '0');
+  var yearJoining = $scope.joinYear.toString().padStart(4, '0');
+  var dateOfJoining = `${dayJoining}-${monthJoining}-${yearJoining}`;
+
+  // Date Joining
+  var monthJoin = $scope.joinMonth2.toString().padStart(2, '0');
+  var dayJoin = $scope.joinDay2.toString().padStart(2, '0');
+  var yearJoin = $scope.joinYear2.toString().padStart(4, '0');
+  var dateJoining = `${dayJoin}-${monthJoin}-${yearJoin}`;
+          var offerLetterContent = `
+          <!DOCTYPE html>
+<html>
+<head>
+  <title>Offer Letter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url('pcs.jpg'); /* Add the path to your background image */
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    div {
+      margin-top: 110px;
+      margin-bottom: 800px;
+      margin-right: 40px;
+      margin-left: 70px;
+    }
+
+    blockquote.hi {
+      margin-top: 0px;
+      margin-bottom: 0px;
+      margin-right: 0px;
+      margin-left: 50px;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <blockquote>
+      <b>Mr</b>  <b style="text-transform: capitalize;">${$scope.name}</b><br>
+      ${$scope.address}
+    </blockquote>
+
+
+    <blockquote align="right">Date: ${dateJoining}</blockquote>
+
+    <h4 align="center"><ins>Sud: Provisional Joining Letter<ins></h4>
+
+    <blockquote>Dear <b style="text-transform: capitalize;">${$scope.name}</b>,</blockquote>
+
+    <blockquote>
+      <small>We are pleased to inform you that you have successfully completed all of our preliminary and basic level selection procedures. Hence, we would like to offer you the position of <b>" ${$scope.designation} "</b> in our organization, with effect from ${dateOfJoining}.</small>
+    </blockquote>
+
+    <small>
+      <blockquote class="hi">
+        <b>Designation:</b> ${$scope.designation}<br>
+        <b>Provisional Associate ID:</b> ${$scope.associateId}<br>
+        <b>Date of Joining:</b> ${dateOfJoining}<br>
+        <b>Primary Technical Domain:</b> ${$scope.technicalDomain}<br>
+        <b>Primary Terms & Conditions:</b> ${$scope.termsConditions}
+      </blockquote>
+    </small>
+    <blockquote>
+        During trainee period you will get scope to upgrade your knowledge only and no stipend/salary applicable.
+        </blockquote> 
+      <blockquote>
+        You will be required to complete your assigned task regular basis within strict scheduled  time           frame without any delay.
+        </blockquote>
+
+    <blockquote>
+      Regular performance reviews will be conducted to assess your performance and suitability.<br>
+      You must maintain strict confidentiality and secrecy of company information.
+    </blockquote>
+
+    <blockquote>
+      If this letter is acceptable to you, kindly sign and return the duplicate copy of this letter as a token of your acceptance.
+    </blockquote>
+
+    <pre>
+      <img src="pcs1.jpg" width="400" height="125"> <!-- Add the path to your company logo image -->
+    </pre>
+
+    <blockquote>
+      <b>ACCEPTANCE OF APPOINTMENT TERMS AND CONDITIONS:</b><br>
+      <small>I agree that I have read, understand, and accept employment as <b>" ${$scope.designation} "</b> with <b>Perennation Computer Solutions Global Pvt. Ltd</b> under the terms and conditions above.</small>
+    </blockquote>
+
+    <blockquote>
+      <b>Signature</b>
+    </blockquote>
+  </div>
+</body>
+</html>
+
+          `;
+
+          var printWindow = window.open('', '', 'width=800,height=600');
+          printWindow.document.open();
+          printWindow.document.write(offerLetterContent);
+          printWindow.document.close();
+
+          printWindow.onload = function() {
+            printWindow.print();
+            printWindow.close();
+          };
+        };
+
+        $scope.printAndSendEmail = function() {
+          $scope.generateOfferLetter();
+
+          // Send an email with the offer letter as attachment
+          var emailSubject = 'Offer Letter';
+          var emailBody = 'Dear ' + $scope.name + ',\n\nPlease find attached your offer letter.\n\nSincerely,\nYour Name';
+          var mailtoUrl = 'mailto:' + $scope.email + '?subject=' + encodeURIComponent(emailSubject) + '&body=' + encodeURIComponent(emailBody);
+          window.location.href = mailtoUrl;
+        };
+
+        $scope.cancelProcess = function() {
+          // Clear the form fields
+          $scope.name = '';
+          $scope.email = '';
+          $scope.phone = '';
+          $scope.address = '';
+          $scope.designation = '';
+          $scope.technicalDomain = '';
+          $scope.associateId = '';
+          $scope.termsConditions = '';
+          $scope.joinDay = '';
+          $scope.joinMonth = '';
+          $scope.joinYear = '';
+        };
+      }]);
+  </script>
+</body>
+</html>
